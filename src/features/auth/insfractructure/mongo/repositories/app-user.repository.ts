@@ -61,7 +61,16 @@ export class AppUserRepository implements IAppUserRepository {
 
   async delete(appUser: AppUser): Promise<void> {
     myLogger.debug("deleting app-user", { id: appUser.id });
-    await this.collection.deleteOne({ _id: new ObjectId(appUser.id) });
+    // soft delete
+    await this.collection.updateOne(
+      { _id: new ObjectId(appUser.id) },
+      {
+        $set: {
+          updatedAt: new Date(),
+          deletedAt: new Date(),
+        },
+      }
+    );
     myLogger.debug("app-user deleted", { id: appUser.id });
   }
 
@@ -113,6 +122,9 @@ export class AppUserRepository implements IAppUserRepository {
     if (searchBy?.id) {
       query["_id"] = new ObjectId(searchBy.id);
     }
+
+    // retrieve only non-deleted app-users
+    query["deletedAt"] = null;
 
     return query;
   }

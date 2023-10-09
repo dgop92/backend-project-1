@@ -1,3 +1,4 @@
+import { ErrorCode, PresentationError } from "@common/errors";
 import { myAppUserFactory } from "@features/auth/factories/app-user.factory";
 import { IAppUserUseCase } from "@features/auth/ports/app-user.use-case.definition";
 import {
@@ -39,10 +40,14 @@ export class AppUserControllerV1 {
   }
 
   @Get("/:id")
-  getOne(@Param("id") id: string) {
-    return this.appUserUseCase.getOneBy({
+  async getOne(@Param("id") id: string) {
+    const appUser = await this.appUserUseCase.getOneBy({
       searchBy: { id },
     });
+    if (!appUser) {
+      throw new PresentationError("user not found", ErrorCode.NOT_FOUND);
+    }
+    return appUser;
   }
 
   @Patch("/:id")

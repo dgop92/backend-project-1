@@ -9,7 +9,7 @@ export interface AppUserCreateInput {
     firstName: string;
     lastName: string;
     phone: string;
-    type: 'ADMIN' | 'CUSTOMER';
+    type: "ADMIN" | "CLIENT";
     userId: string;
   };
 }
@@ -27,7 +27,7 @@ export interface AppUserUpdateInput {
     firstName?: string;
     lastName?: string;
     phone?: string;
-    type?: 'ADMIN' | 'CUSTOMER';
+    type?: "ADMIN" | "CLIENT";
   };
   searchBy: {
     id: string;

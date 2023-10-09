@@ -25,23 +25,13 @@ const myLogger = AppLogger.getAppLogger().createFileLogger(__filename);
 export class AppUserUseCase implements IAppUserUseCase {
   constructor(private readonly userRepository: IAppUserRepository) {}
 
-  create(input: AppUserCreateInput): Promise<AppUser>;
-  create(input: AppUserCreateInput, transactionManager?: any): Promise<AppUser>;
-  async create(
-    input: AppUserCreateInput,
-    transactionManager?: any
-  ): Promise<AppUser> {
+  async create(input: AppUserCreateInput): Promise<AppUser> {
     myLogger.debug("validating app user create data");
     this.validateInput(AppUserCreateInputSchema, input);
-    return this.userRepository.create(input.data, transactionManager);
+    return this.userRepository.create(input.data);
   }
 
-  update(input: AppUserUpdateInput): Promise<AppUser>;
-  update(input: AppUserUpdateInput, transactionManager?: any): Promise<AppUser>;
-  async update(
-    input: AppUserUpdateInput,
-    transactionManager?: any
-  ): Promise<AppUser> {
+  async update(input: AppUserUpdateInput): Promise<AppUser> {
     myLogger.debug("validating app user update data");
     this.validateInput(AppUserUpdateInputSchema, input);
 
@@ -51,10 +41,7 @@ export class AppUserUseCase implements IAppUserUseCase {
     } = input;
 
     myLogger.debug("trying to get app user", { id });
-    const appUser = await this.userRepository.getOneBy(
-      { searchBy: { id } },
-      transactionManager
-    );
+    const appUser = await this.userRepository.getOneBy({ searchBy: { id } });
 
     if (!appUser) {
       myLogger.debug("app user not found, cannot update", {
@@ -67,28 +54,20 @@ export class AppUserUseCase implements IAppUserUseCase {
     }
 
     myLogger.debug("updating user", { id });
-    return this.userRepository.update(appUser, data, transactionManager);
+    return this.userRepository.update(appUser, data);
   }
 
-  delete(input: AppUserLookUpField): Promise<void>;
-  delete(input: AppUserLookUpField, transactionManager?: any): Promise<void>;
-  async delete(
-    input: AppUserLookUpField,
-    transactionManager?: any
-  ): Promise<void> {
+  async delete(input: AppUserLookUpField): Promise<void> {
     myLogger.debug("validating app user delete data");
     this.validateInput(SearchByIdSchema, input);
 
     const id = input.searchBy.id;
 
     myLogger.debug("trying to get app user", { id });
-    const appUser = await this.userRepository.getOneBy(
-      { searchBy: { id } },
-      transactionManager
-    );
+    const appUser = await this.userRepository.getOneBy({ searchBy: { id } });
 
     if (!appUser) {
-      myLogger.debug("app user not found, cannot update", {
+      myLogger.debug("app user not found, cannot delete", {
         id,
       });
       throw new ApplicationError(
@@ -98,21 +77,13 @@ export class AppUserUseCase implements IAppUserUseCase {
     }
 
     myLogger.debug("user found, deleting", { id: input.searchBy.id });
-    this.userRepository.delete(appUser, transactionManager);
+    await this.userRepository.delete(appUser);
   }
 
-  getOneBy(input: AppUserSearchInput): Promise<AppUser | undefined>;
-  getOneBy(
-    input: AppUserSearchInput,
-    transactionManager?: any
-  ): Promise<AppUser | undefined>;
-  getOneBy(
-    input: AppUserSearchInput,
-    transactionManager?: any
-  ): Promise<AppUser | undefined> {
+  async getOneBy(input: AppUserSearchInput): Promise<AppUser | undefined> {
     myLogger.debug("validating app user get one by data");
     this.validateInput(AppUserSearchInputSchema, input);
-    return this.userRepository.getOneBy(input, transactionManager);
+    return this.userRepository.getOneBy(input);
   }
 
   private validateInput(schema: Joi.ObjectSchema, input: any): void {

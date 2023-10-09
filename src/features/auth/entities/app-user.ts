@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export type AppUserType = "ADMIN" | "CUSTOMER";
+export type AppUserType = "ADMIN" | "CLIENT";
 
 export interface AppUser {
   id: string;
@@ -29,7 +29,7 @@ export const AppUserCreateInputSchema = Joi.object({
     phone: Joi.string().max(20).required(),
     address: Joi.string().max(255).required(),
     userId: Joi.string().min(1).max(128).required(),
-    type: Joi.string().valid("ADMIN", "CUSTOMER").required(),
+    type: Joi.string().valid("ADMIN", "CLIENT").required(),
   }).required(),
 }).meta({ className: "AppUserCreateInput" });
 
@@ -39,7 +39,7 @@ export const AppUserUpdateInputSchema = Joi.object({
     lastName: Joi.string().max(120).optional(),
     phone: Joi.string().max(20).optional(),
     address: Joi.string().max(255).optional(),
-    type: Joi.string().valid("ADMIN", "CUSTOMER").optional(),
+    type: Joi.string().valid("ADMIN", "CLIENT").optional(),
   }).required(),
   searchBy: Joi.object({
     id: Joi.string().required(),
