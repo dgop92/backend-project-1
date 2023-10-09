@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "paths": {
+      "@features/*": [
+        "features/*"
+      ],
+      "@common/*": [
+        "common/*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "**/__tests__/**/*",
+    "src/test/*"
+  ]
+}

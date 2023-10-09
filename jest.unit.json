@@ -1,0 +1,13 @@
+{
+  "preset": "ts-jest",
+  "coverageDirectory": "./coverage",
+  "testMatch": ["**/?(*.)+(spec).ts"],
+  "resetMocks": true,
+  "clearMocks": true,
+  "setupFiles": ["<rootDir>/scripts/test-setup.ts"],
+  "moduleNameMapper": {
+    "^@features/(.*)$": "<rootDir>/src/features/$1",
+    "^@common/(.*)$": "<rootDir>/src/common/$1",
+    "^test/(.*)$": "<rootDir>/src/test/$1"
+  }
+}

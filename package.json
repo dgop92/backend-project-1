@@ -1,0 +1,46 @@
+{
+  "name": "backend-project-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/main/index.js",
+  "scripts": {
+    "start": "node -r ./scripts/prod-setup.js dist/main/index.js",
+    "build": "tsc -p tsconfig.build.json",
+    "schema-types": "ts-node -r tsconfig-paths/register ./scripts/create-schema-types.ts",
+    "dev-server": "ts-node-dev -r ./scripts/dev-setup.ts --respawn src/main/index.ts",
+    "dev": "ts-node -r ./scripts/dev-setup.ts src/main/index.ts",
+    "test": "jest -c ./jest.unit.json --verbose --runInBand",
+    "nest": "nest"
+  },
+  "keywords": [],
+  "author": "dgop92",
+  "license": "ISC",
+  "devDependencies": {
+    "@nestjs/cli": "^9.1.1",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^29.0.0",
+    "@types/morgan": "^1.9.3",
+    "@types/multer": "^1.4.7",
+    "@types/node": "17.0.39",
+    "dotenv": "^16.0.1",
+    "jest": "^28.1.2",
+    "joi-to-typescript": "^3.0.3",
+    "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@nestjs/common": "^9.0.11",
+    "@nestjs/core": "^9.0.11",
+    "@nestjs/platform-express": "^9.0.11",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "mongodb": "^4.12.1",
+    "morgan": "^1.10.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.5.6",
+    "tsconfig-paths": "^4.1.1",
+    "winston": "^3.8.1"
+  }
+}
