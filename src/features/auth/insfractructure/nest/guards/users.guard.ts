@@ -96,3 +96,32 @@ export class UserGuard implements CanActivate {
     return true;
   }
 }
+
+@Injectable()
+export class DummyUserGuard implements CanActivate {
+  async canActivate(context: ExecutionContext) {
+    const req = context.switchToHttp().getRequest();
+
+    // in this dummy guard, the token is the app-user id
+    // we will not use auth-user at all
+    const token = extractTokenFromRequest(req);
+    const { appUserUseCase } = myAppUserFactory();
+    const appUser = await appUserUseCase.getOneBy({
+      searchBy: { id: token },
+    });
+
+    if (!appUser) {
+      throw new PresentationError(
+        "app user does not exist",
+        ErrorCode.NOT_FOUND
+      );
+    }
+
+    req.user = {
+      authUser: null,
+      appUser,
+    };
+
+    return true;
+  }
+}
