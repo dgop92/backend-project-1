@@ -1,0 +1,100 @@
+@baseUrl = http://localhost:8080/api/v1/business/products
+@contentType = application/json
+
+### invalid input
+POST {{baseUrl}}/6524bdcaa6a1f5ce55ae8abf/add HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer 65245e6d71bf8e5c8c39a067
+
+{
+  "ad": "juan"
+}
+
+
+### Create valid product
+POST {{baseUrl}}/6524bdcaa6a1f5ce55ae8abf/add HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer 65245e6d71bf8e5c8c39a067
+
+{
+  "name": "agua",
+  "category": "bebida",
+  "price": 5000,
+  "description": "asdasd lorem"
+}
+
+### Create valid product
+POST {{baseUrl}}/6524c1fca4b55b0f071a23e0/add HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer 65245e6d71bf8e5c8c39a067
+
+{
+  "name": "agua aaaaaaa delete",
+  "category": "agua",
+  "price": 100000,
+  "description": "asdasd lorem"
+}
+
+### Create valid product
+POST {{baseUrl}}/6524c1fca4b55b0f071a23e0/add HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer 65245e6d71bf8e5c8c39a067
+
+{
+  "name": "agua fria",
+  "category": "agua",
+  "price": 100000,
+  "description": "asdasd lorem"
+}
+
+### invalid mongo id
+GET {{baseUrl}}/100200312 HTTP/1.1
+
+### not found id
+GET {{baseUrl}}/65aa83e349635689f1bb8cb2 HTTP/1.1
+
+### normal
+GET {{baseUrl}}/65257a3cbcc64b22c8c480ac HTTP/1.1
+
+### Update product
+PATCH {{baseUrl}}/65257a3cbcc64b22c8c480ac HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer 65245e6d71bf8e5c8c39a067
+
+{
+  "name": "sopita caliente",
+  "category": "sopa",
+  "description": "caliente y deliciosa"
+}
+
+### forbidden product update
+PATCH {{baseUrl}}/65257a3cbcc64b22c8c480ac HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer 65245eeb71bf8e5c8c39a068
+
+{
+  "name": "fea sopa",
+  "category": "sopa",
+  "description": "caliente a 100 grados y fea"
+}
+
+### Delete user
+DELETE {{baseUrl}}/65257cf5bcc64b22c8c480b1 HTTP/1.1
+Authorization: Bearer 65245e6d71bf8e5c8c39a067
+
+### Delete user
+DELETE {{baseUrl}}/65257cf5bcc64b22c8c480b1 HTTP/1.1
+Authorization: Bearer 65245e6d71bf8e5c8c39a067
+
+
+### List
+GET {{baseUrl}} HTTP/1.1
+
+### List
+GET {{baseUrl}}?category=sopa HTTP/1.1
+
+### List
+GET {{baseUrl}}?restaurantId=6524bdcaa6a1f5ce55ae8abf HTTP/1.1
+
+### List
+GET {{baseUrl}}?restaurantId=6524bdcaa6a1f5ce55ae8abf&&category=bebida HTTP/1.1

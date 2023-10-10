@@ -3,4 +3,5 @@
  * Do not modify this file manually
  */
 
+export * from './product';
 export * from './restaurant';
