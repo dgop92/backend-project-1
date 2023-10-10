@@ -28,8 +28,8 @@ import {
   Query,
 } from "@nestjs/common";
 
-type UpdateUserRequest = RestaurantUpdateInput["data"];
-type CreateUserRequest = RestaurantCreateInput["data"];
+type UpdateRestaurantRequest = RestaurantUpdateInput["data"];
+type CreateRestaurantRequest = RestaurantCreateInput["data"];
 
 type QueryParams = Omit<
   Required<RestaurantSearchInput>["searchBy"],
@@ -49,7 +49,7 @@ export class RestaurantControllerV1 {
 
   @UseGuards(DummyUserGuard)
   @Post()
-  create(@GetUser() user: User, @Body() data: CreateUserRequest) {
+  create(@GetUser() user: User, @Body() data: CreateRestaurantRequest) {
     validateDataWithJoi(RestaurantCreateInputSchema, { data });
     const appUser = user.appUser;
 
@@ -88,7 +88,7 @@ export class RestaurantControllerV1 {
   @Patch("/:id")
   async updateOne(
     @Param("id") id: string,
-    @Body() data: UpdateUserRequest,
+    @Body() data: UpdateRestaurantRequest,
     @GetUser() user: User
   ) {
     validateDataWithJoi(RestaurantUpdateInputSchema, {
