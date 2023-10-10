@@ -137,6 +137,10 @@ export class ProductRepository implements IProductRepository {
       query["restaurantId"] = new ObjectId(searchBy.restaurantId);
     }
 
+    if (searchBy?.ids) {
+      query["_id"] = { $in: searchBy.ids.map((id) => new ObjectId(id)) };
+    }
+
     // retrieve only non-deleted products
     query["deletedAt"] = null;
 

@@ -16,6 +16,7 @@ export interface ProductSearchInput {
   searchBy?: {
     category?: string;
     id?: string;
+    ids?: string[];
     restaurantId?: string;
   };
 }

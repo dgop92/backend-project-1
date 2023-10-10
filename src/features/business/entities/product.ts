@@ -15,6 +15,7 @@ export interface Product {
 export const ProductSearchInputSchema = Joi.object({
   searchBy: Joi.object({
     id: Joi.string().optional(),
+    ids: Joi.array().items(Joi.string().required()).optional(),
     restaurantId: Joi.string().optional(),
     category: Joi.string().optional(),
   }).optional(),

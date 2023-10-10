@@ -3,5 +3,6 @@
  * Do not modify this file manually
  */
 
+export * from './order';
 export * from './product';
 export * from './restaurant';
