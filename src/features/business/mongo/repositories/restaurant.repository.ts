@@ -24,7 +24,7 @@ export class RestaurantRepository implements IRestaurantRepository {
     myLogger.debug("creating restaurant");
     const data = {
       ...input,
-      appUserId: appUser.id,
+      appUserId: new ObjectId(appUser.id),
       popularity: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -36,8 +36,9 @@ export class RestaurantRepository implements IRestaurantRepository {
       id: result.insertedId.toHexString(),
     });
     return {
-      id: result.insertedId.toHexString(),
       ...data,
+      id: result.insertedId.toHexString(),
+      appUserId: appUser.id,
     };
   }
 
@@ -98,8 +99,9 @@ export class RestaurantRepository implements IRestaurantRepository {
     const { _id, ...rest } = result ?? {};
     myLogger.debug("restaurant found", { id: _id.toHexString() });
     return {
-      id: _id.toHexString(),
       ...rest,
+      id: _id.toHexString(),
+      appUserId: rest.appUserId.toHexString(),
     };
   }
 
@@ -115,8 +117,9 @@ export class RestaurantRepository implements IRestaurantRepository {
     const restaurants = documents.map((document) => {
       const { _id, ...rest } = document;
       return {
-        id: _id.toHexString(),
         ...rest,
+        id: _id.toHexString(),
+        appUserId: rest.appUserId.toHexString(),
       };
     });
 
