@@ -78,11 +78,11 @@ Authorization: Bearer 65245eeb71bf8e5c8c39a068
   "description": "caliente a 100 grados y fea"
 }
 
-### Delete user
+### Delete product
 DELETE {{baseUrl}}/65257cf5bcc64b22c8c480b1 HTTP/1.1
 Authorization: Bearer 65245e6d71bf8e5c8c39a067
 
-### Delete user
+### Delete product
 DELETE {{baseUrl}}/65257cf5bcc64b22c8c480b1 HTTP/1.1
 Authorization: Bearer 65245e6d71bf8e5c8c39a067
 

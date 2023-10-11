@@ -71,7 +71,8 @@ export class OrderRepository implements IOrderRepository {
       items,
       total,
       status: "created",
-      restaurantId: new ObjectId(input.restaurantId),
+      // at least one item is guaranteed to exist
+      restaurantId: new ObjectId(items[0].product.restaurantId),
       appUserId: new ObjectId(input.appUserId),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -139,9 +140,16 @@ export class OrderRepository implements IOrderRepository {
       });
     }
 
+    const newTotal = newOrder.items.reduce((acc, item) => {
+      return acc + item.product.price * item.quantity;
+    }, 0);
+
+    newOrder.total = newTotal;
+
     const updateDoc = {
       $set: {
-        orderItems: newOrder.items,
+        items: newOrder.items,
+        total: newTotal,
         updatedAt: new Date(),
       },
     };

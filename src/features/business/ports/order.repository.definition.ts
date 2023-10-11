@@ -8,7 +8,6 @@ import {
 import { SLPaginationResult } from "@common/types/common-types";
 
 export type OrderCreateRepoData = OrderCreateInput["data"] & {
-  restaurantId: string;
   appUserId: string;
 };
 export type OrderUpdateRepoData = OrderUpdateInput["data"];

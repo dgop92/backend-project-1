@@ -49,11 +49,11 @@ Authorization: Bearer 65245eeb71bf8e5c8c39a068
   "address": "Calle 10 Kr 49 Esquina"
 }
 
-### Delete user
+### Delete restaurant
 DELETE {{baseUrl}}/6524bf18a6a1f5ce55ae8ac0 HTTP/1.1
 Authorization: Bearer 65245e6d71bf8e5c8c39a067
 
-### Delete user
+### Delete restaurant
 DELETE {{baseUrl}}/6524bf18a6a1f5ce55ae8ac0 HTTP/1.1
 Authorization: Bearer 65245e6d71bf8e5c8c39a067
 
