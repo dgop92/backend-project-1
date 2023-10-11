@@ -35,7 +35,10 @@ type CreateOrderRequest = OrderCreateInput["data"];
 type UpdateOrderStatusRequest = OrderUpdateStatusInput["data"];
 
 type QueryParams = Required<OrderSearchInput>["searchBy"] &
-  Required<OrderSearchInput>["filterBy"];
+  Omit<Required<OrderSearchInput>["filterBy"], "createdAt"> & {
+    createdAtFrom?: string;
+    createdAtTo?: string;
+  };
 
 @Controller({
   path: "orders",
@@ -58,11 +61,18 @@ export class OrderControllerV1 {
       },
       filterBy: {
         status: query.status,
+        createdAt: {
+          from: query.createdAtFrom,
+          to: query.createdAtTo,
+        },
       },
     };
-    validateDataWithJoi(OrderSearchInputSchema, searchQuery);
+    const value = validateDataWithJoi<OrderSearchInput>(
+      OrderSearchInputSchema,
+      searchQuery
+    );
 
-    return this.orderRepository.getManyBy(searchQuery);
+    return this.orderRepository.getManyBy(value);
   }
 
   @UseGuards(DummyUserGuard)
@@ -131,6 +141,13 @@ export class OrderControllerV1 {
 
     if (!order) {
       throw new PresentationError("order not found", ErrorCode.NOT_FOUND);
+    }
+
+    if (order.status === "on-the-way" || order.status === "delivered") {
+      throw new PresentationError(
+        "you are not allowed to update an order that is on the way or delivered",
+        ErrorCode.INVALID_OPERATION
+      );
     }
 
     if (order.appUserId !== user.appUser.id) {

@@ -34,6 +34,10 @@ export const OrderSearchInputSchema = Joi.object({
     status: Joi.string()
       .valid("created", "in-progress", "on-the-way", "delivered")
       .optional(),
+    createdAt: Joi.object({
+      from: Joi.date().optional(),
+      to: Joi.date().optional(),
+    }).optional(),
   }).optional(),
 }).meta({ className: "OrderSearchInput" });
 

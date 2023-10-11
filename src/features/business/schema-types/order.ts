@@ -16,6 +16,10 @@ export interface OrderItem {
 
 export interface OrderSearchInput {
   filterBy?: {
+    createdAt?: {
+      from?: Date;
+      to?: Date;
+    };
     status?: 'created' | 'in-progress' | 'on-the-way' | 'delivered';
   };
   searchBy?: {

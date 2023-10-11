@@ -47,7 +47,16 @@ Authorization: Bearer 65245eeb71bf8e5c8c39a068
 GET {{baseUrl}} HTTP/1.1
 
 ### List
-GET {{baseUrl}}?category=sopa HTTP/1.1
+GET {{baseUrl}}?status=in-progress HTTP/1.1
+
+### List
+GET {{baseUrl}}?status=created HTTP/1.1
+
+### List
+GET {{baseUrl}}?createdAtFrom=2023-12-01&createdAtTo=2024-02-01 HTTP/1.1
+
+### List
+GET {{baseUrl}}?status=delivered HTTP/1.1
 
 ### List
 GET {{baseUrl}}?restaurantId=6524bdcaa6a1f5ce55ae8abf HTTP/1.1

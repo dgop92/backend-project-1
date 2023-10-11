@@ -263,6 +263,19 @@ export class OrderRepository implements IOrderRepository {
       query["status"] = filterBy.status;
     }
 
+    if (filterBy?.createdAt?.from) {
+      query["createdAt"] = {
+        $gte: filterBy.createdAt.from,
+      };
+    }
+
+    if (filterBy?.createdAt?.to) {
+      query["createdAt"] = {
+        ...query["createdAt"],
+        $lte: filterBy.createdAt.to,
+      };
+    }
+
     // retrieve only non-deleted orders
     query["deletedAt"] = null;
 
