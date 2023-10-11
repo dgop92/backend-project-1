@@ -14,7 +14,7 @@ The following project follows a simplifed variant of the clean architecture. It 
 
 ### Main libraries
 
-- MongpDB Client
+- MongoDB Client
 - NestJS
 - Joi
 
