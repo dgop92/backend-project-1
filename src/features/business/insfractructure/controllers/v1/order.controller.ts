@@ -11,7 +11,9 @@ import {
   OrderUpdateStatusInputSchema,
 } from "@features/business/entities/order";
 import { myOrderFactory } from "@features/business/factories/order.factory";
+import { myRestaurantFactory } from "@features/business/factories/resturant.factory";
 import { IOrderRepository } from "@features/business/ports/order.repository.definition";
+import { IRestaurantRepository } from "@features/business/ports/restaurant.repository.definition";
 import {
   OrderCreateInput,
   OrderSearchInput,
@@ -46,9 +48,12 @@ type QueryParams = Required<OrderSearchInput>["searchBy"] &
 })
 export class OrderControllerV1 {
   private readonly orderRepository: IOrderRepository;
+  private readonly restaurantRepository: IRestaurantRepository;
   constructor() {
     const { orderRepository } = myOrderFactory();
+    const { restaurantRepository } = myRestaurantFactory();
     this.orderRepository = orderRepository;
+    this.restaurantRepository = restaurantRepository;
   }
 
   @Get()
@@ -108,6 +113,18 @@ export class OrderControllerV1 {
     }
 
     const newOrder = await this.orderRepository.updateStatus(order, data);
+
+    const restaurant = await this.restaurantRepository.getOneBy({
+      searchBy: { id: order.restaurantId },
+    });
+
+    if (!restaurant) {
+      throw new PresentationError("restaurant not found", ErrorCode.NOT_FOUND);
+    }
+
+    if (newOrder.status === "delivered") {
+      await this.restaurantRepository.updatePopularityByOne(restaurant);
+    }
 
     return newOrder;
   }

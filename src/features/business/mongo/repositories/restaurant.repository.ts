@@ -68,6 +68,29 @@ export class RestaurantRepository implements IRestaurantRepository {
     };
   }
 
+  async updatePopularityByOne(restaurant: Restaurant): Promise<Restaurant> {
+    const popularity = restaurant.popularity + 1;
+    myLogger.debug("updating restaurant popularity", {
+      id: restaurant.id,
+      popularity,
+    });
+    const updateDoc = {
+      $set: {
+        popularity,
+        updatedAt: new Date(),
+      },
+    };
+    await this.collection.updateOne(
+      { _id: new ObjectId(restaurant.id) },
+      updateDoc
+    );
+    myLogger.debug("restaurant popularity updated", { id: restaurant.id });
+    return {
+      ...restaurant,
+      popularity,
+    };
+  }
+
   async delete(restaurant: Restaurant): Promise<void> {
     myLogger.debug("deleting restaurant", { id: restaurant.id });
     // soft delete
@@ -110,7 +133,7 @@ export class RestaurantRepository implements IRestaurantRepository {
   ): Promise<SLPaginationResult<Restaurant>> {
     myLogger.debug("getting many Restaurants by", { input });
     const query = this.getQuery(input.searchBy);
-    const cursor = this.collection.find(query);
+    const cursor = this.collection.find(query, { sort: { popularity: -1 } });
 
     const documents = await cursor.toArray();
     const totalCount = documents.length;

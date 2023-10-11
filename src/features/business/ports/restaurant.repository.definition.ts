@@ -19,6 +19,7 @@ export interface IRestaurantRepository {
     restaurant: Restaurant,
     input: RestaurantUpdateRepoData
   ): Promise<Restaurant>;
+  updatePopularityByOne(restaurant: Restaurant): Promise<Restaurant>;
   delete(restaurant: Restaurant): Promise<void>;
   getOneBy(input: RestaurantSearchInput): Promise<Restaurant | undefined>;
   getManyBy(

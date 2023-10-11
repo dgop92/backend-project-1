@@ -38,7 +38,7 @@ Authorization: Bearer 65245eeb71bf8e5c8c39a068
   "items": [
     {
         "productId": "65257bd4bcc64b22c8c480af",
-        "quantity": 1
+        "quantity": 5
     }
   ]
 }
@@ -127,6 +127,15 @@ Authorization: Bearer 65245e6d71bf8e5c8c39a067
 
 {
   "status": "in-progress"
+}
+
+### update status, also update the popularity of a restaurant
+PATCH {{baseUrl}}/6526a43e67158be807a2b39a/status HTTP/1.1
+Content-Type: {{contentType}}
+Authorization: Bearer 65245e6d71bf8e5c8c39a067
+
+{
+  "status": "delivered"
 }
 
 
