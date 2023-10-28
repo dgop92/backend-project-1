@@ -30,6 +30,7 @@ For development, create inside `env-vars` a file called `.env.dev` and copy the 
 ## Notes
 
 - Authentication is mocked by passing the app user ID in the authorization header instead of a token
+- Email and password login is not implemented until the authentication strategy is defined. Nevertheless, almost the necessary code is already implemented but not used.
 - The controllers can be found in all files ending with .controller.ts
 - This project is focused more on the CRUD part, It does not contain any form of authentication
 - Even if there is no authentication, permission validations are sometimes considered.
